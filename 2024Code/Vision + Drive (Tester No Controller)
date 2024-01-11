@@ -1,0 +1,107 @@
+# Vision with Basic Drive autonomous calibration Test, no controller, full Auton Comp.Template
+
+#region VEXcode Generated Robot Configuration
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain=Brain()
+
+# Robot configuration code
+
+
+# wait for rotation sensor to fully initialize
+wait(30, MSEC)
+
+
+def play_vexcode_sound(sound_name):
+    # Helper to make playing sounds from the V5 in VEXcode easier and
+    # keeps the code cleaner by making it clear what is happening.
+    print("VEXPlaySound:" + sound_name)
+    wait(5, MSEC)
+
+# add a small delay to make sure we don't print in the middle of the REPL header
+wait(200, MSEC)
+# clear the console to make sure we don't have the REPL in the console
+print("\033[2J")
+
+#endregion VEXcode Generated Robot Configuration
+
+# ------------------------------------------
+# 
+# 	Project: Auton Drive Test #1
+#	Author: Shreyas Sharma 
+#	Created: Jan-11-2023
+#	Configuration: Standard Team Motor Setuop
+# 
+# ------------------------------------------
+
+# Library imports
+from vex import *
+import cv2
+
+# Begin project code
+
+def pre_autonomous():
+    # actions to do when the program starts
+    brain.screen.clear_screen()
+    brain.screen.print("Auton code ( PRE) StandingBy")
+    wait(1, SECONDS)
+
+
+
+def autonomous():
+    brain.screen.clear_screen()
+    brain.screen.print("autonomous code")
+    # Move the robot forward for 30 CM
+Right.start(50)  # Adjust the motor speed as needed
+Left.start(50)  # Adjust the motor speed as needed
+wait(3000)  # Adjust the duration as needed
+
+# Stop the robot
+Right.stop()
+Left.stop()
+
+# Do a full slow 360-degree turn
+inertial_9.calibrate()
+inertial_9.reset_rotation()
+Right.start(10)  # Adjust the motor speed as needed
+Left.start(-10)  # Adjust the motor speed as needed
+while inertial_9.rotation() < 360:
+    pass
+Right.stop()
+Left.stop()
+
+# Find the closest triball with the vision sensor
+closest_triball = None
+closest_distance = float('inf')
+for obj in vision_10.objects():
+    if obj.signature == 1 and obj.distance < closest_distance:
+        closest_triball = obj
+        closest_distance = obj.distance
+
+# Move closer to the triball
+while closest_triball and closest_triball.centerX != 50:
+    error = 50 - closest_triball.centerX
+    # Adjust the motor speeds based on the error
+    Right.start(50 + error)
+    Left.start(50 - error)
+    closest_triball = vision_10.objects()[0]  # Update the closest triball object
+    wait(10)
+
+# Activate the drivetrain
+Right.start(50)  # Adjust the motor speed as needed
+Left.start(50)  # Adjust the motor speed as needed
+    
+
+    # place automonous code here
+
+def user_control():
+    brain.screen.clear_screen()
+    # place driver control in this while loop
+    while True:
+        wait(20, MSEC)
+
+# create competition instance
+comp = Competition(user_control, autonomous)
+pre_autonomous()
