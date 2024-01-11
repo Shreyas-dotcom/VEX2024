@@ -16,3 +16,6 @@ Vision Sensor: 10
 
 Pneumatics: 3-Pin Connector
 Line Sensor: 3-Pin Connector
+
+## 2023 VEX Club Team Picture
+<img width="1271" alt="Screenshot 2024-01-11 at 7 59 05 PM" src="https://github.com/Shreyas-dotcom/VEX2024/assets/82762631/26f5d398-a6ce-47ca-b8da-64208b2d524e">
