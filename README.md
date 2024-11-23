@@ -23,5 +23,5 @@ Line Sensor: 3-Pin Connector
 ![100861732329504_ pic](https://github.com/user-attachments/assets/d1f289a9-0a4d-43c8-aafa-56143db93918)
 
 
-(Left to Right) Simon Jang, JoonSoo Hwang, SAS Eagle, Shreyas Sharma 
+> (Left to Right) Simon Jang, JoonSoo Hwang, SAS Eagle, Shreyas Sharma 
 
