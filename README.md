@@ -19,7 +19,8 @@ Line Sensor: 3-Pin Connector
 <img width="1271" alt="Screenshot 2024-01-11 at 7 59 05 PM" src="https://github.com/Shreyas-dotcom/VEX2024/assets/82762631/26f5d398-a6ce-47ca-b8da-64208b2d524e">
 
 ## 2024 VEX 13212E Team Picture 
-![Uploading Screenshot 2024-11-23 at 10.44.14 AM.png…]()
+
+![100861732329504_ pic](https://github.com/user-attachments/assets/d1f289a9-0a4d-43c8-aafa-56143db93918)
 
 
 (Left to Right) Simon Jang, JoonSoo Hwang, SAS Eagle, Shreyas Sharma 
