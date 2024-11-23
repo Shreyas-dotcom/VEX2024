@@ -1,4 +1,4 @@
-# VEX Robotics TOP GEAR Competition Robot 
+# VEX Robotics TOP GEAR Competition Robot [![CI](https://github.com/bitcraze/bitcraze-website/workflows/CI/badge.svg)](https://github.com/PhoenixSquadron/AutonDrive/actions)
 
 This is a code repository for Concordia International School Shanghai's VEX Robotics Team and has all the source code and general support code for Team 13212's Robot. This repository has general templates for the full club and hosts the robot-specific code for the 13212E Team. 
 
