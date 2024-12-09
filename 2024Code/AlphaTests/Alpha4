@@ -1,0 +1,124 @@
+#region VEXcode Generated Robot Configuration
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain=Brain()
+
+# Robot configuration code
+rotation = Rotation(Ports.PORT10, False)
+
+
+# wait for rotation sensor to fully initialize
+wait(30, MSEC)
+
+
+# Make random actually random
+def initializeRandomSeed():
+    wait(100, MSEC)
+    random = brain.battery.voltage(MV) + brain.battery.current(CurrentUnits.AMP) * 100 + brain.timer.system_high_res()
+    urandom.seed(int(random))
+      
+# Set random seed 
+initializeRandomSeed()
+
+
+def play_vexcode_sound(sound_name):
+    # Helper to make playing sounds from the V5 in VEXcode easier and
+    # keeps the code cleaner by making it clear what is happening.
+    print("VEXPlaySound:" + sound_name)
+    wait(5, MSEC)
+
+# add a small delay to make sure we don't print in the middle of the REPL header
+wait(200, MSEC)
+# clear the console to make sure we don't have the REPL in the console
+print("\033[2J")
+
+#endregion VEXcode Generated Robot Configuration
+# region VEXcode Generated Robot Configuration
+from vex import *
+import urandom
+
+# Brain should be defined by default
+brain = Brain()
+
+# Robot configuration code
+
+# Left Drive 
+left_motor_a = Motor(Ports.PORT1, GearSetting.RATIO_6_1, True)
+left_motor_b = Motor(Ports.PORT2, GearSetting.RATIO_6_1, True)
+left_motor_c = Motor(Ports.PORT3, GearSetting.RATIO_6_1, True)
+left_drive_smart = MotorGroup(left_motor_a, left_motor_b, left_motor_c)
+
+# Right Drive
+right_motor_a = Motor(Ports.PORT4, GearSetting.RATIO_6_1, False)
+right_motor_b = Motor(Ports.PORT5, GearSetting.RATIO_6_1, False)
+right_motor_c = Motor(Ports.PORT6, GearSetting.RATIO_6_1, False)
+right_drive_smart = MotorGroup(right_motor_a, right_motor_b, right_motor_c)
+
+drivetrain = DriveTrain(left_drive_smart, right_drive_smart, 319.19, 295, 40, MM, 1)
+
+# Twin 5.5w motors
+motor_group_8_motor_a = Motor(Ports.PORT8, GearSetting.RATIO_18_1, False)
+motor_group_8_motor_b = Motor(Ports.PORT9, GearSetting.RATIO_18_1, True)
+motor_group_8 = MotorGroup(motor_group_8_motor_a, motor_group_8_motor_b)
+
+# Intake Motor
+Intake = Motor(Ports.PORT7, GearSetting.RATIO_6_1, False)
+Intake.set_velocity(90, PERCENT)
+
+# Controller Initialization
+controller_1 = Controller()
+
+# Speed Settings
+left_drive_smart.set_velocity(100, PERCENT)
+right_drive_smart.set_velocity(100, PERCENT)
+motor_group_8.set_velocity(100, PERCENT)
+
+# Define Piston1 (assuming it uses a digital output port)
+Piston1 = DigitalOut(brain.three_wire_port.a)
+
+stateB = False
+
+# Main Loop
+while True:
+    # Drive logic
+    left_drive_smart.spin(FORWARD, controller_1.axis3.position(), VOLT)
+    right_drive_smart.spin(FORWARD, controller_1.axis2.position(), VOLT)
+
+    # Intake control logic
+    if controller_1.buttonR1.pressing():
+        Intake.spin(REVERSE)
+    elif controller_1.buttonR2.pressing():
+        Intake.spin(FORWARD)
+    else:
+        Intake.stop()
+
+
+    if controller_1.buttonL1.pressing():
+        motor_group_8.spin(REVERSE)    
+        stateB = False
+    elif controller_1.buttonL2.pressing():
+        motor_group_8.spin(FORWARD)
+        stateB = False
+    else:
+        motor_group_8.stop()
+
+        if stateB:
+            motor_group_8.spin_to_position(0, DEGREES) # Change this val 
+
+    if controller_1.buttonB.pressing():
+        motor_group_8.spin_to_position(0, DEGREES) # Change this val 
+        stateB = True
+
+    # Piston control logic
+    if controller_1.buttonUp.pressing():
+        Piston1.set(True)
+    if controller_1.buttonDown.pressing():
+        Piston1.set(False)
+
+    # Uncomment if Piston2 is defined
+    # if controller_1.buttonL1.pressing():
+    #     Piston2.set(True)
+    # if controller_1.buttonL2.pressing():
+    #     Piston2.set(False)
